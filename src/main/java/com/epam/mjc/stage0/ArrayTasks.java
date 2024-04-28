@@ -43,7 +43,7 @@ public class ArrayTasks {
     public int totalSum(int[] arr) {
         int sum = 0;
         for (int i = 0; i < arr.length; i++) {
-            sum += i;
+            sum += arr[i];
         }
         return sum;
     }
@@ -59,8 +59,8 @@ public class ArrayTasks {
      */
     public int findIndexOfNumber(int[] arr, int number) {
         for (int i = 0; i < arr.length; i++) {
-            if (i == number) {
-                return i+1;
+            if (arr[i] == number) {
+                return i;
             }
         }
         return -1;
@@ -95,10 +95,17 @@ public class ArrayTasks {
      * arr = [1, 2]         -> [1, 2]
      */
     public int[] getOnlyPositiveNumbers(int[] arr) {
-        int[] positiveArray = new int[arr.length];
-        for (int i = 0, j = 0; i < arr.length; i++, j++) {
-            if(i > 0){
-                positiveArray[j] = arr[i];
+        int count = 0;
+        for (int num : arr) {
+            if (num > 0) {
+                count++;
+            }
+        }
+        int[] positiveArray = new int[count];
+        int index = 0;
+        for (int num : arr) {
+            if (num > 0) {
+                positiveArray[index++] = num;
             }
         }
         return positiveArray;
@@ -114,5 +121,30 @@ public class ArrayTasks {
      * arr = [[3, 1, 2,], [3,2]] -> [[2, 3], [1, 2, 3]]
      * arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
+    public int[][] sortRaggedArray(int[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[j].length > arr[j + 1].length) {
+                    // Swap arrays
+                    int[] temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length - 1; j++) {
+                for (int k = 0; k < arr[i].length - j - 1; k++) {
+                    if (arr[i][k] > arr[i][k + 1]) {
+                        // Swap elements
+                        int temp = arr[i][k];
+                        arr[i][k] = arr[i][k + 1];
+                        arr[i][k + 1] = temp;
+                    }
+                }
+            }
+        }
 
+        return arr;
+    }
 }
